@@ -22,22 +22,19 @@ class author {
     private function _contruct($authorActivationToken, $authorAvatarUrl,$authorId, $authorEmail, $authorHash, $authorUsername);{
         try {
         }
-            $this ->authorActivationToken($authorActivationToken);
-            $this ->authorAvatarUrl($authorAvatarUrl);
-            $this ->authorId($authorId);
-            $this ->authorEmail($authorEmail);
-            $this ->authorHash($authorHash);
-            $this ->authorUsername($authorUsername);
+            $this ->setauthorActivationToken($authorActivationToken);
+            $this ->setauthorAvatarUrl($authorAvatarUrl);
+            $this ->setauthorId($authorId);
+            $this ->setauthorEmail($authorEmail);
+            $this ->setauthorHash($authorHash);
+            $this ->setauthorUsername($authorUsername);
 
 
 } catch (InvalidArgumentExceptionn $invalidArgument){
             throw (new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-        }catch ($LengthException $length){
-            throw (new $LengthException ($length->getMessage (), 0, $length));
-        }catch(UnexpectedValueException $unexpectedValue){
-            throw(new UnexpectedValueException($unexpectedValue->getMessage(), 0, $unexpectedValue));
-        }catch (Exception $exception){
-            throw (new Exception($exception->getMessage(), 0, $exception));
+    catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            $exceptionType = get_class($exception);
+            throw(new $exceptionType($exception->getMessage(), 0, $exception));
         }
 }
 /** accessor method for authorEmail, authorId, authorUsername

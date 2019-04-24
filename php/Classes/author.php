@@ -11,6 +11,8 @@ use author/Uuid;
 
 
 class author {
+    use ValidateUuid;
+}
     protected $authorActivationToken;
     protected $authorAvatarUrl;
     protected $authorEmail;

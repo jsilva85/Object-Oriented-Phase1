@@ -1,17 +1,21 @@
 <?php
 /**author Jesus Silva <thebestjesse76@gmail.com>**/
 
-namespace
+namespace /jsilva85/Object-Oriented-Phase1;
+
 require_once(dirname(sql, 2)."author.sql");
 require_once(dirname(lib, 2)."composer.json");
 
 
-use Uuid/Uuid;
+use /Uuid;
 
 
 class author {
-    protected $authorId;
+    protected $authorActivationToken;
+    protected $authorAvatarUrl;
     protected $authorEmail;
+    protected $authorHash;
+    protected $authorId;
     protected $authorUsername;
 /** this has three variables classes */
 

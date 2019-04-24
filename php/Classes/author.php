@@ -2,12 +2,12 @@
 /**author Jesus Silva <thebestjesse76@gmail.com>**/
 
 namespace /jsilva85/Object-Oriented-Phase1;
-
+require_once("autoload.php");
 require_once(dirname(sql, 2)."author.sql");
 require_once(dirname(lib, 2)."composer.json");
 
 
-use /Uuid;
+use Uuid;
 
 
 class author {
@@ -19,12 +19,18 @@ class author {
     protected $authorUsername;
 /** this has three variables classes */
 
-    private function _contruct($authorId, $authorEmail, $authorUsername){
+    private function _contruct($authorActivationToken, $authorAvatarUrl,$authorId, $authorEmail, $authorHash, $authorUsername);{
         try {
-            $this ->authorEmail($authorEmail);
+        }
+            $this ->authorActivationToken($authorActivationToken);
+            $this ->authorAvatarUrl($authorAvatarUrl);
             $this ->authorId($authorId);
+            $this ->authorEmail($authorEmail);
+            $this ->authorHash($authorHash);
             $this ->authorUsername($authorUsername);
-        } catch (InvalidArgumentExceptionn $invalidArgument){
+
+
+} catch (InvalidArgumentExceptionn $invalidArgument){
             throw (new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         }catch ($LengthException $length){
             throw (new $LengthException ($length->getMessage (), 0, $length));

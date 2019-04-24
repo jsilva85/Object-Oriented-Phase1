@@ -7,7 +7,7 @@ require_once(dirname(sql, 2)."author.sql");
 require_once(dirname(lib, 2)."composer.json");
 
 
-use Uuid;
+use author/Uuid;
 
 
 class author {

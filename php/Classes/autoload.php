@@ -16,8 +16,8 @@ spl_autoload_register(function($class) {
      * prefix: the prefix for all the classes (i.e., the namespace)
      * baseDir: the base directory for all classes (default = current directory)
      **/
-    $prefix = "jsilva85\\Object-Oriented-Phase1";
-    $baseDir = php;
+    $prefix = "jsilva85\ObjectOrientedPhase1";
+    $baseDir = __DIR__;
 
     // does the class use the namespace prefix?
     $len = strlen($prefix);

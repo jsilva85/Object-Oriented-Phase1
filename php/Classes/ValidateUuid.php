@@ -1,5 +1,5 @@
 <?php
-namespace /jsilva85/Object-Oriented-Phase1;
+namespace jsilva85\ObjectOrientedphase1;
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
@@ -11,8 +11,9 @@ use Ramsey\Uuid\Uuid;
  * 2. binary string (16 bytes)
  * 3. Ramsey\Uuid\Uuid object
  *
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
- * @package Edu\Cnm\Misquote
+ * @author Jesus Silva <thebestjesse76@gmail.com>
+ * @version 5.0.0
+ * @package jsilva85/Object-Oriented-Phase1
  **/
 trait ValidateUuid {
     /**
@@ -40,7 +41,7 @@ trait ValidateUuid {
             } else {
                 throw(new \InvalidArgumentException("invalid uuid"));
             }
-        } else if(gettype($newUuid) === "object" && get_class($newUuid) === "Ramsey\\Uuid\\Uuid") {
+        } else if(gettype($newUuid) === "object" && get_class($newUuid) === "author\\Uuid\\Uuid") {
             // if the misquote id is already a valid UUID, press on
             $uuid = $newUuid;
         } else {

@@ -1,13 +1,13 @@
 <?php
-namespace /jsilva85/Object-Oriented-Phase1;
+namespace jsilva85\ObjectOrientedphase1;
 /**
  * Trait to Validate a mySQL Date
  *
  * This trait will inject a private method to validate a mySQL style date (e.g., 2016-01-15 15:32:48.643216). It will
  * convert a string representation to a DateTime object or throw an exception.
  *
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
- * @version 4.0.1
+ * @author Jesus Silva <thebestjesse76@gmail.com>
+ * @version 5.0.0
  **/
 trait ValidateDate {
     /**

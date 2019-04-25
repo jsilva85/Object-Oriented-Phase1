@@ -39,7 +39,7 @@ class Author {
             $this->setAuthorUsername($newAuthorUsername);
         }
             //determine what exception type was thrown
-        catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+        catch(\InvalidArgumentException| \RangeException | \Exception | \TypeError $exception) {
             $exceptionType = get_class($exception);
             throw(new $exceptionType($exception->getMessage(), 0, $exception));
         }
@@ -70,7 +70,7 @@ class Author {
      *
      * @return string value of authorAvatarUrl
      */
-    public function getAuthorAvatarUrl(): ?string {
+    public function getAuthorAvatarUrl(): string {
         return ($this->authorAvatarUrl);
     }
     /**
@@ -99,7 +99,7 @@ class Author {
      */
 
 
-    public function getAuthorActivationToken(): ?string {
+    public function getAuthorActivationToken(): string {
         return ($this->authorActivationToken);
     }
     /**
@@ -109,7 +109,7 @@ class Author {
      * @throws \InvalidArgumentException if the url is not a string or insecure
      * @throws \ TypeError if the url is not a string
      */
-    public function setAuthorActivationToken(?string $newAuthorActivationToken): void {
+    public function setAuthorActivationToken (string $newAuthorActivationToken): void {
         if($newAuthorActivationToken === null) {
             $this->authorActivationToken = null;
             return;
@@ -169,7 +169,7 @@ class Author {
         }
         //enforce that it is an argon hash
         $newAuthorHashInfo = password_get_info($newAuthorHash);
-        if($newAuthorHashInfo["algoName"] !== "argon2i") {
+        if($newAuthorHashInfo["jdubName"] !== "jdub2i") {
             throw(new \InvalidArgumentException("author hash is not a valid hash"));
         }
         if(strlen($newAuthorHash) !== 97) {

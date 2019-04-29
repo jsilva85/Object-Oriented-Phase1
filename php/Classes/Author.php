@@ -1,10 +1,10 @@
 <?php
 /**
- *I understand the idea of specifying a namespace, but this exact bit of code is beyond me.
+ *this namespace stuff is really crazy
  */
 namespace jsilva85\ObjectOrientedPhase1;
 require_once(dirname(__DIR__) . "/vendor/autoload.php");
-require_once(dirname(__DIR__) . "/classes/autoload.php");
+require_once(dirname(__DIR__) . "/Classes/autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
  *class has to be created to be identified
@@ -29,7 +29,8 @@ class Author {
      *
      */
     public function __construct($newAuthorId, string $newAuthorAvatarUrl, string $newAuthorActivationToken,
-                                string $newAuthorEmail, string $newAuthorHash, string $newAuthorUsername ) {
+                                string $newAuthorEmail, string $newAuthorHash, string $newAuthorUsername )
+    {
         try {
             $this->setAuthorId($newAuthorId);
             $this->setAuthorAvatarUrl($newAuthorAvatarUrl);
@@ -37,16 +38,18 @@ class Author {
             $this->setAuthorEmail($newAuthorEmail);
             $this->setAuthorHash($newAuthorHash);
             $this->setAuthorUsername($newAuthorUsername);
-        }
-            //determine what exception type was thrown
-        catch(\InvalidArgumentException| \RangeException | \Exception | \TypeError $exception) {
+        } //determine what exception type was thrown
+        catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
             $exceptionType = get_class($exception);
             throw(new $exceptionType($exception->getMessage(), 0, $exception));
         }
     }
-    public function getAuthorId(): Uuid {
-        return ($this->authorId);
-    }
+
+        public function getAuthorId(): Uuid{
+            return ($this->authorId);
+        }
+
+
     /**
      * mutator method for authorId
      *
@@ -169,11 +172,11 @@ class Author {
         }
         //enforce that it is an argon hash
         $newAuthorHashInfo = password_get_info($newAuthorHash);
-        if($newAuthorHashInfo["jdubName"] !== "jdub2i") {
+        if($newAuthorHashInfo["algoName"] !== "argon21") {
             throw(new \InvalidArgumentException("author hash is not a valid hash"));
         }
-        if(strlen($newAuthorHash) !== 97) {
-            throw(new \RangeException("author hash must be 97 characters"));
+        if(strlen($newAuthorHash) !== 128) {
+            throw(new \RangeException("author hash must be 128 characters"));
         }
         $this->authorHash = $newAuthorHash;
     }

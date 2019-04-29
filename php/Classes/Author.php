@@ -171,8 +171,8 @@ class Author {
             throw(new \InvalidArgumentException("Author hash is not a valid hash"));
         }
         //enforce that it is an argon hash
-        $newAuthorHashInfo = password_get_info($newAuthorHash);
-        if($newAuthorHashInfo["algoName"] !== "argon21") {
+        $authorHashInfo = password_get_info($newAuthorHash);
+        if($authorHashInfo["algoName"] !== "argon2i") {
             throw(new \InvalidArgumentException("author hash is not a valid hash"));
         }
         if(strlen($newAuthorHash) !== 128) {

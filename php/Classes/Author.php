@@ -175,7 +175,7 @@ class Author {
         if($authorHashInfo["algoName"] !== "argon2i") {
             throw(new \InvalidArgumentException("author hash is not a valid hash"));
         }
-        if(strlen($newAuthorHash) !== 128) {
+        if(strlen($newAuthorHash) !== 97) {
             throw(new \RangeException("author hash must be 128 characters"));
         }
         $this->authorHash = $newAuthorHash;

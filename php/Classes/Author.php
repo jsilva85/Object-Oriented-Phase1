@@ -197,4 +197,88 @@ class Author {
         }
         $this->authorUsername = $newAuthorUsername;
     }
+/**insert function method
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+
+public function insert(\PDO $pdo) : void {
+
+    // making a query template
+    $query = "INSERT INTO author(authorId, authorAvatarUrl, authorActivationToken, authorEmail,authorUsername) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorUsername)";
+    $statement = $pdo->prepare($query);
+
+    $parameters = ["authorId" => $this->authorId->getBytes()];
+    $statement->execute($parameters);
 }
+    /** 	 * updates this author in mySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
+
+    public function update (\PDO $pdo) : void {
+        $query ="UPDATE author Set authorAvatarUrl = :authorAvatarUrl, authorActivationToken = :authorActivationToken, authorEmail = :authorEmail, authorUsername = :authorUsername where authorId = :authorId";
+        $statement = $pdo -> prepare ($query);
+
+        $parameters = ["tweetId" => $this->authorId->getBytes(),"authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorAvatarUrl, "authorEmail" => $this->authorEmail, "authorUsername" => $this->authorUsername];
+        $statement->execute($parameters);
+
+    }
+
+    /**
+     * deletes this Author from mySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
+    public function delete (\PDO $pdo) : void {
+        $query = "DELETE from author Where authorId = :authorId";
+        $statement = $pdo->prepare ($query);
+        //query is showing what function and where to delete
+        //statement prepares a query
+        $parameters = ["authorId" => $this -> authorId ->getBytes ()];
+        $statement ->execute ($parameters);
+    }
+    /**
+     * gets the Tweet by tweetId
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param Uuid| $authorId author id to search for
+     * @return Author|null author found or null if not found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when a variable are not the correct data type
+     **/
+    public static function getAuthorByAuthorId (\PDO $pdo, $authorId) : ?Author {
+        //sanitize the authorId before searching
+        try {
+            $authorId = self :: validateUuid ($authorId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+            throw (new \PDOException ($exception->getMessage (), 0, $exception));
+    }
+//create a query template
+        $query = "SELECT authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorUsername FROM author Where authorId = :authorId";
+        $statement = $pdo ->prepare($query);
+        //created template and have to bind the place holder
+        $parameters = ["authorId" => $authorId->getBytes ()];
+        $statement -> execute ($parameters);
+        //stated the parameters and executing
+        try {
+            $author = null;
+            //if no tweet will be null
+            $statement ->setFetchMode(\PDO::FETCH_ASSOC);
+            $row = $statement->fetch();
+            if($row !== false) {
+                $author = new Author($row["authorId"], $row["authorAvatarUrl"], $row ["authorAvatarUrl"], $row ["authorEmail"], $row ["authorUsername"]);
+            }
+        } catch(\Exception $exception){
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
+        return($author);
+    }
+
+
+}//closing record

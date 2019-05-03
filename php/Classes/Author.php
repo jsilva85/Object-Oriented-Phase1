@@ -279,6 +279,46 @@ public function insert(\PDO $pdo) : void {
             }
         return($author);
     }
+/**
+ * gets the Author by content
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param string $tweetContent tweet content to search for
+ * @return \SplFixedArray SplFixedArray of Tweets found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ */
+public static function getAuthorByAuthorActivationToken (\PDO $pdo, string $authorActivationToken) : \SplFixedArray {
+    // sanitize the description before searching
+    $authorActivationToken = trim($authorActivationToken);
+    $authorActivationToken = filter_var($authorActivationToken,FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    if(empty($authorActivationToken) === true){
+        throw(new\PDOException("author activation if invalid"));
+    }
+    // escape any mySQL wild cards
+    $authorActivationToken = str_replace("_","\\",str_replace("%","\\%", $authorActivationToken));
+    // create query template
+    $query = "SELECT authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUsername From author WHERE authorActivationToken Like :authorActivationToken";
+    $statement = $pdo->prepare($query);
+    // bind the authorActivation Tweet content to the place holder in the template
+    $authorActivationToken = "%$authorActivationToken";
+    $statement->execute($parameters);
+    // build an array of authorActivationToken
+    $authorActivationToken = new\SplFixedArray($statement->rowCount());
+    $statement->setFectchMode(\PDO::FETCH_ASSOC);
+    while ((ROW = $statement->fetch()) !== false) {
+        try {
+            $authorActivationToken = new Author($row["authorId"], $row["authorAvatarUrl"], $row["authorActivationToken"], $row["authorEmail"], $row["authorHash"], $row["authorUsername"]);
+            $authorActivationToken[$authorActivationToken->key()] = $authorActivationToken;
+            $authorActivationToken->next();
+        } catch(\Exception $exception) {
+            // if the row couldn't be converted, rethrow it
+            throw(new \PDOException(($exception->getMessage(), 0, $exception));
+}
+    }
+    return($authorActivationToken);
+
+}
 
 
 }//closing record
